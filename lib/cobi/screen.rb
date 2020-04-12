@@ -7,22 +7,30 @@ require "cobi/heading"
 
 module Cobi
   class Screen
-    attr_reader :screen_height, :on_submit
+    attr_reader :screen_height
 
-    def initialize(on_submit = Proc.new { exit(1) })
+    def initialize
       @elements = []
       @screen_height = `tput lines`.to_i
-      @on_submit = on_submit
+      @running = false
     end
 
     def run
       # Focus the first field
       @elements.find { |e| e.is_a?(Field) }.focused = true
+      @running = true
 
-      while true
+      while @running
         draw
         get_command
       end
+
+      values
+    end
+
+    def on_submit(&block)
+      @on_submit = block
+      self
     end
 
     def heading(text)
@@ -50,7 +58,7 @@ module Cobi
       end
 
       puts pastel.black("\n" * (screen_height - @elements.length - 4))
-      puts pastel.green("Ctrl+C to quit")
+      puts pastel.green("Tab to switch fields | Enter to submit")
     end
 
     def get_command
@@ -58,23 +66,29 @@ module Cobi
       exit(1) if cmd == "\u0003" # exit on Ctrl+C
 
       if cmd == "\t" # tab
-        switch_focus
-      elsif cmd # TODO only if alphanumeric
-        handle_character(cmd)
-      elsif cmd == 'enter' # TODO
+        handle_switch_focus
+      elsif cmd == "\n" || cmd == "\r" # TODO
         handle_submit
+      elsif cmd =~/[[:alpha:]]/ || cmd =~ /[[:digit:]]/
+        handle_character(cmd)
       end
     end
 
-    def handle_select
-      on_submit.call
+    def handle_submit
+      @running = false
+    end
+
+    def values
+      @elements.select { |e| e.is_a?(Field) }
+        .map { |e| [e.text, e.value] }
+        .to_h
     end
 
     def handle_character(char)
       @elements.find { |e| e.focused? }.value += char
     end
 
-    def switch_focus
+    def handle_switch_focus
       focused_index = @elements.find_index { |e| e.focused? }
 
       next_index = focused_index + 1

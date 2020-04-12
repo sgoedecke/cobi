@@ -3,7 +3,11 @@
 require "bundler/setup"
 require "cobi"
 
-Cobi::Screen.new.heading("Dog Manager")
+dog_info = Cobi::Screen.new
+  .heading("Please enter the details of your dog")
   .field("Name")
   .field("Breed")
+  .field("Age")
   .run
+
+puts dog_info.inspect
