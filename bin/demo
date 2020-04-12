@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "cobi"
+
+Cobi::Screen.new.heading("Dog Manager")
+  .field("Name")
+  .field("Breed")
+  .run
