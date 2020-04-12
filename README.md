@@ -1,8 +1,6 @@
 # Cobi
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/cobi`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Cobi is a terminal menu library loosely inspired by COBOL's `SCREEN SECTION`. It aims to be (a) as simple as possible to use, and (b) to be a better user experience than the conversational menus that almost every generator uses: users should be able to see all the questions immediately, and navigate around your answers before submitting.
 
 ## Installation
 
@@ -12,28 +10,11 @@ Add this line to your application's Gemfile:
 gem 'cobi'
 ```
 
-And then execute:
-
-    $ bundle install
-
-Or install it yourself as:
-
-    $ gem install cobi
-
 ## Usage
 
-TODO: Write usage instructions here
+See `bin/demo` for an example. Initialize a new `Cobi::Screen`, attach some headings or fields to it, then call `run` to display it.
 
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/cobi.
-
+It's significantly less powerful than COBOL's `SCREEN SECTION` by design.
 
 ## License
 
