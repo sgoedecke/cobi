@@ -12,9 +12,20 @@ gem 'cobi'
 
 ## Usage
 
-See `bin/demo` for an example. Initialize a new `Cobi::Screen`, attach some headings or fields to it, then call `run` to display it.
+See `bin/demo` for an example. Initialize a new `Cobi::Screen`, attach some headings or fields to it, then call `run` to display it. It's significantly less powerful than COBOL's `SCREEN SECTION` by design.
 
-It's significantly less powerful than COBOL's `SCREEN SECTION` by design.
+```ruby
+dog_info = Cobi::Screen.new
+  .heading("Please enter the details of your dog")
+  .field("Name")
+  .field("Breed")
+  .field("Age")
+  .run
+
+puts dog_info.inspect
+```
+
+![Screenshot](/screenshot.png?raw=true)
 
 ## License
 
